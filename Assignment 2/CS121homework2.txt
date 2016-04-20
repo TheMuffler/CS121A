@@ -118,3 +118,112 @@ CREATE TABLE Flights(
 		REFERENCES AirPorts(iata)
 			ON DELETE CASCADE,
 );
+
+CREATE TABLE Reservations(
+	cid INTEGER,
+	flight_num INTEGER,
+	proj_dept DATETIME,
+
+	purchase_date DATETIME,
+	purchase_price DECIMAL(10,2),
+	quantity INTEGER,
+
+	PRIMARY KEY(cid,flight_num,proj_dept),
+	FOREIGN KEY(cid)
+		REFERENCES Customers
+			ON DELETE CASCADE,
+	FOREIGN KEY(flight_num,proj_dept)
+		REFERENCES Flights
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Maintains(
+	eid INTEGER,
+	plane_reg_num INTEGER,
+
+	PRIMARY KEY(eid, plane_reg_num),
+	FOREIGN KEY(eid)
+		REFERENCES Engineers
+			ON DELETE CASCADE,
+	FOREIGN KEY(plane_reg_num)
+		REFERENCES Planes(reg_num)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Operates(
+	eid INTEGER,
+	plane_reg_num INTEGER,
+
+	PRIMARY KEY(eid, plane_reg_num),
+	FOREIGN KEY(eid)
+		REFERENCES Pilots
+			ON DELETE CASCADE,
+	FOREIGN KEY(plane_reg_num)
+		REFERENCES Planes(reg_num)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Participates(
+	eid INTEGER,
+	plane_reg_num INTEGER,
+
+	PRIMARY KEY(eid, plane_reg_num),
+	FOREIGN KEY(eid)
+		REFERENCES Attendants
+			ON DELETE CASCADE,
+	FOREIGN KEY(plane_reg_num)
+		REFERENCES Planes(reg_num)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Lounges(
+	lid INTEGER,
+	location VARCHAR(40),
+	airport_iata INTEGER,
+
+	PRIMARY KEY(lid),
+	FOREIGN KEY(airport_iata)
+		REFERENCES Airports(iata)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Dishes(
+	name VARCHAR(20),
+	lid INTEGER,
+	price DECIMAL(10,2),
+
+	PRIMARY KEY(name,lid),
+	FOREIGN KEY(lid)
+		REFERENCES Lounges
+			ON DELETE CASCADE
+);
+
+CREATE TABLE DishOrders(
+	oid INTEGER,
+	order_datetime DATETIME
+	lid INTEGER,
+	cid INTEGER,
+
+	PRIMARY KEY(oid),
+	FOREIGN KEY(lid)
+		REFERENCES Lounges
+			ON DELETE CASCADE,
+	FOREIGN KEY(cid)
+		REFERENCES Customers
+			ON DELETE CASCADE
+);
+
+CREATE TABLE OrderContents(
+	oid INTEGER,
+	dname VARCHAR(20),
+	lid INTEGER,
+	quantity INTEGER,
+
+	PRIMARY KEY(oid,dname,lid),
+	FOREIGN KEY(oid)
+		REFERENCES DishOrders
+			ON DELETE CASCADE,
+	FOREIGN KEY(dname,lid)
+		REFERENCES Dishes
+			ON DELETE CASCADE
+);
