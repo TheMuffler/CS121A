@@ -1,5 +1,5 @@
 CREATE TABLE Planes(
-	reg_num INTEGER,
+	reg_num INTEGER NOT NULL,
 	model_num INTEGER,
 	purchase_year DATE,
 	manufactured_year DATE,
@@ -8,7 +8,7 @@ CREATE TABLE Planes(
 );
 
 CREATE TABLE Employees(
-	eid INTEGER,
+	eid INTEGER NOT NULL,
 	street VARCHAR(40),
 	city VARCHAR(40),
 	state VARCHAR(20),
@@ -23,7 +23,7 @@ CREATE TABLE Employees(
 
 
 CREATE TABLE Engineers(
-	eid INTEGER,
+	eid INTEGER NOT NULL,
 	skill VARCHAR(20),
 	PRIMARY KEY(eid),
 	FOREIGN KEY(eid)
@@ -32,7 +32,7 @@ CREATE TABLE Engineers(
 );
 
 CREATE TABLE Pilots(
-	eid INTEGER,
+	eid INTEGER NOT NULL,
 	since DATE,
 	PRIMARY KEY(eid),
 	FOREIGN KEY(eid)
@@ -41,7 +41,7 @@ CREATE TABLE Pilots(
 );
 
 CREATE TABLE FlightAttendants(
-	eid INTEGER,
+	eid INTEGER NOT NULL,
 	service_year DATE,
 	PRIMARY KEY(eid),
 	FOREIGN KEY(eid)
@@ -50,7 +50,7 @@ CREATE TABLE FlightAttendants(
 );
 
 CREATE TABLE OperationStaff(
-	eid INTEGER,
+	eid INTEGER NOT NULL,
 	department VARCHAR(20),
 	PRIMARY KEY(eid),
 	FOREIGN KEY(eid)
@@ -59,7 +59,7 @@ CREATE TABLE OperationStaff(
 );
 
 CREATE TABLE Airports(
-	iata INTEGER,
+	iata INTEGER NOT NULL,
 	name VARCHAR(20),
 	city VARCHAR(40),
 	state CHAR(20),
@@ -68,7 +68,7 @@ CREATE TABLE Airports(
 
 
 CREATE TABLE Customers(
-	cid INTEGER,
+	cid INTEGER NOT NULL,
 	ssn CHAR(10),
 
 	email VARCHAR(40),
@@ -84,7 +84,7 @@ CREATE TABLE Customers(
 );
 
 CREATE TABLE CreditCards(
-	cid INTEGER,
+	cid INTEGER NOT NULL,
 	number INTEGER,
 	expr_date DATE,
 	PRIMARY KEY(cid,number),
@@ -94,8 +94,8 @@ CREATE TABLE CreditCards(
 );
 
 CREATE TABLE Flights(
-	flight_num INTEGER,
-	proj_dept DATETIME,
+	flight_num INTEGER NOT NULL,
+	proj_dept DATETIME NOT NULL,
 	proj_arrive DATETIME,
 
 	actual_dept DATETIME,
@@ -115,9 +115,9 @@ CREATE TABLE Flights(
 );
 
 CREATE TABLE Reservations(
-	cid INTEGER,
-	flight_num INTEGER,
-	proj_dept DATETIME,
+	cid INTEGER NOT NULL,
+	flight_num INTEGER NOT NULL,
+	proj_dept DATETIME NOT NULL,
 
 	purchase_date DATETIME,
 	purchase_price DECIMAL(10,2),
@@ -133,8 +133,8 @@ CREATE TABLE Reservations(
 );
 
 CREATE TABLE Maintains(
-	eid INTEGER,
-	plane_reg_num INTEGER,
+	eid INTEGER NOT NULL,
+	plane_reg_num INTEGER NOT NULL,
 
 	PRIMARY KEY(eid, plane_reg_num),
 	FOREIGN KEY(eid)
@@ -146,8 +146,8 @@ CREATE TABLE Maintains(
 );
 
 CREATE TABLE Operates(
-	eid INTEGER,
-	plane_reg_num INTEGER,
+	eid INTEGER NOT NULL,
+	plane_reg_num INTEGER NOT NULL,
 
 	PRIMARY KEY(eid, plane_reg_num),
 	FOREIGN KEY(eid)
@@ -159,8 +159,8 @@ CREATE TABLE Operates(
 );
 
 CREATE TABLE Participates(
-	eid INTEGER,
-	plane_reg_num INTEGER,
+	eid INTEGER NOT NULL,
+	plane_reg_num INTEGER NOT NULL,
 
 	PRIMARY KEY(eid, plane_reg_num),
 	FOREIGN KEY(eid)
@@ -172,7 +172,7 @@ CREATE TABLE Participates(
 );
 
 CREATE TABLE Lounges(
-	lid INTEGER,
+	lid INTEGER NOT NULL,
 	location VARCHAR(40),
 	airport_iata INTEGER,
 
@@ -183,8 +183,8 @@ CREATE TABLE Lounges(
 );
 
 CREATE TABLE Dishes(
-	name VARCHAR(20),
-	lid INTEGER,
+	name VARCHAR(20) NOT NULL,
+	lid INTEGER NOT NULL,
 	price DECIMAL(10,2),
 
 	PRIMARY KEY(name,lid),
@@ -194,10 +194,10 @@ CREATE TABLE Dishes(
 );
 
 CREATE TABLE DishOrders(
-	oid INTEGER,
+	oid INTEGER NOT NULL,
 	order_datetime DATETIME,
-	lid INTEGER,
-	cid INTEGER,
+	lid INTEGER NOT NULL,
+	cid INTEGER NOT NULL,
 
 	PRIMARY KEY(oid),
 	FOREIGN KEY(lid)
@@ -209,9 +209,9 @@ CREATE TABLE DishOrders(
 );
 
 CREATE TABLE OrderContents(
-	oid INTEGER,
-	dname VARCHAR(20),
-	lid INTEGER,
+	oid INTEGER NOT NULL,
+	dname VARCHAR(20) NOT NULL,
+	lid INTEGER NOT NULL,
 	quantity INTEGER,
 
 	PRIMARY KEY(oid,dname,lid),
