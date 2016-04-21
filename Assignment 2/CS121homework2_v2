@@ -1,0 +1,224 @@
+CREATE TABLE Planes(
+	reg_num INTEGER,
+	model_num INTEGER,
+	purchase_year DATE,
+	manufactured_year DATE,
+	capacity INTEGER,
+	PRIMARY KEY(reg_num)
+);
+
+CREATE TABLE Employees(
+	eid INTEGER,
+	street VARCHAR(40),
+	city VARCHAR(40),
+	state VARCHAR(20),
+	zipcode VARCHAR(10),
+	phone_number VARCHAR(20),
+	birthdate DATE,
+	ssn CHAR(10),
+	job_title VARCHAR(20),
+	PRIMARY KEY (eid),
+	UNIQUE(ssn)
+);
+
+
+CREATE TABLE Engineers(
+	eid INTEGER,
+	skill VARCHAR(20),
+	PRIMARY KEY(eid),
+	FOREIGN KEY(eid)
+		REFERENCES Employees(eid)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Pilots(
+	eid INTEGER,
+	since DATE,
+	PRIMARY KEY(eid),
+	FOREIGN KEY(eid)
+		REFERENCES Employees(eid)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE FlightAttendants(
+	eid INTEGER,
+	service_year DATE,
+	PRIMARY KEY(eid),
+	FOREIGN KEY(eid)
+		REFERENCES Employees(eid)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE OperationStaff(
+	eid INTEGER,
+	department VARCHAR(20),
+	PRIMARY KEY(eid),
+	FOREIGN KEY(eid)
+		REFERENCES Employees(eid)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Airports(
+	iata INTEGER,
+	name VARCHAR(20),
+	city VARCHAR(40),
+	state CHAR(20),
+	PRIMARY KEY(iata)
+);
+
+
+CREATE TABLE Customers(
+	cid INTEGER,
+	ssn CHAR(10),
+
+	email VARCHAR(40),
+	gender CHAR(1),
+
+	street VARCHAR(40),
+	city VARCHAR(40),
+	state VARCHAR(20),
+	zipcode VARCHAR(10),
+
+	PRIMARY KEY(cid),
+	UNIQUE(ssn)
+);
+
+CREATE TABLE CreditCards(
+	cid INTEGER,
+	number INTEGER,
+	expr_date DATE,
+	PRIMARY KEY(cid,number),
+	FOREIGN KEY(cid)
+		REFERENCES Customers(cid)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Flights(
+	flight_num INTEGER,
+	proj_dept DATETIME,
+	proj_arrive DATETIME,
+
+	actual_dept DATETIME,
+	actual_arrive DATETIME,
+
+	plane_reg_num INTEGER,
+
+	depart_iata INTEGER,
+	arrives_iata INTEGER,
+
+
+	PRIMARY KEY(flight_num, proj_dept),
+
+	FOREIGN KEY(plane_reg_num)
+		REFERENCES Planes(reg_num)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Reservations(
+	cid INTEGER,
+	flight_num INTEGER,
+	proj_dept DATETIME,
+
+	purchase_date DATETIME,
+	purchase_price DECIMAL(10,2),
+	quantity INTEGER,
+
+	PRIMARY KEY(cid,flight_num,proj_dept),
+	FOREIGN KEY(cid)
+		REFERENCES Customers(cid)
+			ON DELETE CASCADE,
+	FOREIGN KEY(flight_num,proj_dept)
+		REFERENCES Flights(flight_num,proj_dept)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Maintains(
+	eid INTEGER,
+	plane_reg_num INTEGER,
+
+	PRIMARY KEY(eid, plane_reg_num),
+	FOREIGN KEY(eid)
+		REFERENCES Engineers(eid)
+			ON DELETE CASCADE,
+	FOREIGN KEY(plane_reg_num)
+		REFERENCES Planes(reg_num)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Operates(
+	eid INTEGER,
+	plane_reg_num INTEGER,
+
+	PRIMARY KEY(eid, plane_reg_num),
+	FOREIGN KEY(eid)
+		REFERENCES Pilots(eid)
+			ON DELETE CASCADE,
+	FOREIGN KEY(plane_reg_num)
+		REFERENCES Planes(reg_num)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Participates(
+	eid INTEGER,
+	plane_reg_num INTEGER,
+
+	PRIMARY KEY(eid, plane_reg_num),
+	FOREIGN KEY(eid)
+		REFERENCES FlightAttendants(eid)
+			ON DELETE CASCADE,
+	FOREIGN KEY(plane_reg_num)
+		REFERENCES Planes(reg_num)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Lounges(
+	lid INTEGER,
+	location VARCHAR(40),
+	airport_iata INTEGER,
+
+	PRIMARY KEY(lid),
+	FOREIGN KEY(airport_iata)
+		REFERENCES Airports(iata)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE Dishes(
+	name VARCHAR(20),
+	lid INTEGER,
+	price DECIMAL(10,2),
+
+	PRIMARY KEY(name,lid),
+	FOREIGN KEY(lid)
+		REFERENCES Lounges(lid)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE DishOrders(
+	oid INTEGER,
+	order_datetime DATETIME,
+	lid INTEGER,
+	cid INTEGER,
+
+	PRIMARY KEY(oid),
+	FOREIGN KEY(lid)
+		REFERENCES Lounges(lid)
+			ON DELETE CASCADE,
+	FOREIGN KEY(cid)
+		REFERENCES Customers(cid)
+			ON DELETE CASCADE
+);
+
+CREATE TABLE OrderContents(
+	oid INTEGER,
+	dname VARCHAR(20),
+	lid INTEGER,
+	quantity INTEGER,
+
+	PRIMARY KEY(oid,dname,lid),
+	FOREIGN KEY(oid)
+		REFERENCES DishOrders(oid)
+			ON DELETE CASCADE,
+	FOREIGN KEY(dname,lid)
+		REFERENCES Dishes(name,lid)
+			ON DELETE CASCADE
+);
