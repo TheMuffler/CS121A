@@ -112,6 +112,12 @@ CREATE TABLE Flights(
 	FOREIGN KEY(plane_reg_num)
 		REFERENCES Planes(reg_num)
 			ON DELETE CASCADE
+
+	FOREIGN KEY(depart_iata)
+		REFERENCES Airports(iata),
+
+	FOREIGN KEY(arrives_iata)
+		REFERENCES Airports(iata)
 );
 
 CREATE TABLE Reservations(
