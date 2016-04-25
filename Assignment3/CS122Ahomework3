@@ -98,3 +98,54 @@ Customer_Reserves_Flight.cid
 1
 13
 14
+
+
+Query 10:
+SELECT *
+FROM Customer
+WHERE address_street LIKE '%Warner Avenue'
+
+Customer.cid	Customer.ssn	Customer.gender	Customer.email	Customer.address_street	Customer.address_city	Customer.address_state	Customer.address_zipcode
+7	481161938	F	ijvbv5hx@e0z8o6w.com	9091536 East Warner Avenue	Santa Ana	CA	92705
+8	340130873	M	iz4tvg5j0e.@otiw34ymv68z.com	9091536 West Warner Avenue	Santa Ana	CA	92705
+
+
+Query 11:
+SELECT C.cid
+FROM Customer as C, Customer_Reserves_Flight as R, DishOrder  as D
+WHERE C.cid = R.cid AND C.cid = D.cid
+
+C.cid
+1
+14
+
+Query 12:
+SELECT L.location
+FROM Lounge as L, Dish as D
+WHERE L.lid = D.lid AND (D.name = 'tacos' OR D.name = 'hummus')
+
+L.location
+section D32
+section D12
+
+
+Query 13:
+((SELECT cid FROM Customer)
+EXCEPT (SELECT DISTINCT cid FROM DishOrder))
+EXCEPT (SELECT DISTINCT cid FROM Customer_Reserves_Flight)
+
+Customer.cid
+4
+5
+6
+7
+8
+9
+10
+11
+15
+16
+17
+18
+19
+20
