@@ -103,21 +103,23 @@ CREATE TABLE Flights(
 
 	plane_reg_num INTEGER,
 
-	depart_iata INTEGER,
-	arrives_iata INTEGER,
+	depart_iata INTEGER NOT NULL,
+	arrives_iata INTEGER NOT NULL,
 
 
 	PRIMARY KEY(flight_num, proj_dept),
 
 	FOREIGN KEY(plane_reg_num)
 		REFERENCES Planes(reg_num)
-			ON DELETE CASCADE
+			ON DELETE SET NULL,
 
 	FOREIGN KEY(depart_iata)
-		REFERENCES Airports(iata),
+		REFERENCES Airports(iata)
+			ON DELETE CASCADE,
 
 	FOREIGN KEY(arrives_iata)
 		REFERENCES Airports(iata)
+			ON DELETE CASCADE
 );
 
 CREATE TABLE Reservations(
@@ -180,7 +182,7 @@ CREATE TABLE Participates(
 CREATE TABLE Lounges(
 	lid INTEGER NOT NULL,
 	location VARCHAR(40),
-	airport_iata INTEGER,
+	airport_iata INTEGER NOT NULL,
 
 	PRIMARY KEY(lid),
 	FOREIGN KEY(airport_iata)
@@ -202,13 +204,15 @@ CREATE TABLE Dishes(
 CREATE TABLE DishOrders(
 	oid INTEGER NOT NULL,
 	order_datetime DATETIME,
-	lid INTEGER NOT NULL,
+	lid INTEGER,
 	cid INTEGER NOT NULL,
+
+	total_cost DECIMAL(10,2),
 
 	PRIMARY KEY(oid),
 	FOREIGN KEY(lid)
 		REFERENCES Lounges(lid)
-			ON DELETE CASCADE,
+			ON DELETE SET NULL,
 	FOREIGN KEY(cid)
 		REFERENCES Customers(cid)
 			ON DELETE CASCADE
