@@ -1,4 +1,4 @@
-CS 122A HW1
+﻿CS 122A HW1
 Group ID: 22
 Name ID
 Sean King 82425468
@@ -10,10 +10,10 @@ Query 1:
 σ gender = 'F' ∧ address_city = 'Irvine' (Customer)
 
 Results 1:
-Customer.cid	Customer.ssn	Customer.gender	Customer.email	Customer.address_street	Customer.address_city	Customer.address_state	Customer.address_zipcode
-2	582902877	F	gimodc@qg5a543.com	9091 Watermarke Place	Irvine	CA	92612
-6	830930154	F	2ldx.6l9@pk11l2s.com	90915241 Laguna Canyon Road	Irvine	CA	92618
-19	22152601	F	5-.@rblrzxw-ql9c.com	90931 Creek Road	Irvine
+Customer.cid	Customer.ssn	Customer.gender		Customer.email		Customer.address_street		Customer.address_city	Customer.address_state	Customer.address_zipcode
+2		582902877	F			gimodc@qg5a543.com	9091 Watermarke Place		Irvine			CA			92612
+6		830930154	F			2ldx.6l9@pk11l2s.com	90915241 Laguna Canyon Road	Irvine			CA			92618
+19		22152601	F			5-.@rblrzxw-ql9c.com	90931 Creek Road		Irvine			CA			92604
 
 
 Query 2:
@@ -36,16 +36,11 @@ Credit_Card.card_number	Credit_Card.expr_date
 
 
 Query 4: 
-π gender, address_street, address_city
-(
-	Customer join (
-		π cid ((σ name = 'wafu steak' (DishOrder_Contains_Dish)) join DishOrder)
-	)
-)
+π gender, address_street, address_city (Customer join (	π cid ((σ name = 'wafu steak' (DishOrder_Contains_Dish)) join DishOrder)))
 
 Results 4:
-Customer.gender	Customer.address_street	Customer.address_city
-F	90917772 17th Street	Tustin
+Customer.gender		Customer.address_street		Customer.address_city
+F			90917772 17th Street		Tustin
 
 
 Query 5:
@@ -54,9 +49,9 @@ X = π cid (σ flight_number = 'N124' ∧ projected_departure_datetime = '2015-0
 
 Results 5:
 DishOrder_Contains_Dish.name	DishOrder_Contains_Dish.quantity
-hummus	10
-the burger combo	5
-the karma burger	3
+hummus				10
+the burger combo		5
+the karma burger		3
 
 
 Query 6:
@@ -65,21 +60,21 @@ X = Customer join (π cid (Customer) - π cid (DishOrder))
 
 Results 6:
 Customer.cid	Customer.email
-4	r1d0800121@8w-4lb.com
-5	eu3@4l4ligbm2d4.com
-6	2ldx.6l9@pk11l2s.com
-7	ijvbv5hx@e0z8o6w.com
-8	iz4tvg5j0e.@otiw34ymv68z.com
-9	xhrh8pptf0bm2@ki4jwmsiek.com
-10	93nwu_g3pow65d@0zekopshz.com
-11	gmzs@hdm9q8rpd.com
-13	42-8b8@l0m1bttskf3.com
-15	9zsiot3@8aab4f3tj.com
-16	4ikmvae@xsvx5etrv2.com
-17	s3et50zvq-9b1@dlayle.com
-18	2-z6sf@oh-sz1whst6.com
-19	5-.@rblrzxw-ql9c.com
-20	iuxh@al8wsoem.com
+4		r1d0800121@8w-4lb.com
+5		eu3@4l4ligbm2d4.com
+6		2ldx.6l9@pk11l2s.com
+7		ijvbv5hx@e0z8o6w.com
+8		iz4tvg5j0e.@otiw34ymv68z.com
+9		xhrh8pptf0bm2@ki4jwmsiek.com
+10		93nwu_g3pow65d@0zekopshz.com
+11		gmzs@hdm9q8rpd.com
+13		42-8b8@l0m1bttskf3.com
+15		9zsiot3@8aab4f3tj.com
+16		4ikmvae@xsvx5etrv2.com
+17		s3et50zvq-9b1@dlayle.com
+18		2-z6sf@oh-sz1whst6.com
+19		5-.@rblrzxw-ql9c.com
+20		iuxh@al8wsoem.com
 
 
 Query 7: 
@@ -89,7 +84,7 @@ Y = π lid (Lounge)
 
 Results 7:
 Customer.cid	Customer.ssn
-1	988843736
+1		988843736
 
 
 Query 8:
@@ -120,9 +115,9 @@ FROM Customer
 WHERE address_street LIKE '%Warner Avenue'
 
 Results 10:
-Customer.cid	Customer.ssn	Customer.gender	Customer.email	Customer.address_street	Customer.address_city	Customer.address_state	Customer.address_zipcode
-7	481161938	F	ijvbv5hx@e0z8o6w.com	9091536 East Warner Avenue	Santa Ana	CA	92705
-8	340130873	M	iz4tvg5j0e.@otiw34ymv68z.com	9091536 West Warner Avenue	Santa Ana	CA	92705
+Customer.cid	Customer.ssn	Customer.gender	Customer.email			Customer.address_street		Customer.address_city	Customer.address_state	Customer.address_zipcode
+7		481161938	F		ijvbv5hx@e0z8o6w.com		9091536 East Warner Avenue	Santa Ana		CA			92705
+8		340130873	M		iz4tvg5j0e.@otiw34ymv68z.com	9091536 West Warner Avenue	Santa Ana		CA			92705
 
 
 Query 11:
