@@ -1,4 +1,6 @@
 
+
+
 Query 1: σ gender = 'F' (Customer)
 
 Customer.cid	Customer.ssn	Customer.gender	Customer.email	Customer.address_street	Customer.address_city	Customer.address_state	Customer.address_zipcode
