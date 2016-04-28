@@ -1,22 +1,25 @@
+CS 122A HW1
+Group ID: 22
+Name ID
+Sean King 82425468
+Dmitry Stepin 79695197
+Ryan Cockins 92859394
 
 
+Query 1:
+σ gender = 'F' ∧ address_city = 'Irvine' (Customer)
 
-Query 1: σ gender = 'F' (Customer)
-
+Results 1:
 Customer.cid	Customer.ssn	Customer.gender	Customer.email	Customer.address_street	Customer.address_city	Customer.address_state	Customer.address_zipcode
 2	582902877	F	gimodc@qg5a543.com	9091 Watermarke Place	Irvine	CA	92612
-3	455171051	F	l91bi@rds0z4ct9n2d.com	9091290 North Hancock Street	Anaheim	CA	92807
-4	117911362	F	r1d0800121@8w-4lb.com	90914780 Pipeline Avenue	Chino Hills	CA	91709
 6	830930154	F	2ldx.6l9@pk11l2s.com	90915241 Laguna Canyon Road	Irvine	CA	92618
-7	481161938	F	ijvbv5hx@e0z8o6w.com	9091536 East Warner Avenue	Santa Ana	CA	92705
-12	459777569	F	s4yk8@v006nomucpd.com	90917772 17th Street	Tustin	CA	92780
-13	891455675	F	42-8b8@l0m1bttskf3.com	909195 North Euclid Avenue	Upland	CA	91786
-16	390453600	F	4ikmvae@xsvx5etrv2.com	90923726 Birtcher Drive	Lake Forest	CA	92630
-19	22152601	F	5-.@rblrzxw-ql9c.com	90931 Creek Road	Irvine	CA	92604
+19	22152601	F	5-.@rblrzxw-ql9c.com	90931 Creek Road	Irvine
 
 
-Query 2: π name (σ lid = 113 (Dish))
+Query 2:
+π name (σ lid = 113 (Dish))
 
+Results 2:
 Dish.name
 grilled free range chicken
 grilled steak
@@ -24,8 +27,10 @@ oven baked salmon
 tempura
 
 
-Query 3: π card_number,expr_date (σ cid = 16 (Credit_Card))
+Query 3:
+π card_number,expr_date (σ cid = 16 (Credit_Card))
 
+Results 3:
 Credit_Card.card_number	Credit_Card.expr_date
 67718812245978283	201803
 
@@ -38,23 +43,27 @@ Query 4:
 	)
 )
 
+Results 4:
 Customer.gender	Customer.address_street	Customer.address_city
 F	90917772 17th Street	Tustin
 
 
 Query 5:
 X = π cid (σ flight_number = 'N124' ∧ projected_departure_datetime = '2015-09-07 08:21:00' ∧ quantity = 1 (Customer_Reserves_Flight))
-
 π name, quantity ((π oid (X join DishOrder)) join DishOrder_Contains_Dish)
 
+Results 5:
 DishOrder_Contains_Dish.name	DishOrder_Contains_Dish.quantity
 hummus	10
 the burger combo	5
 the karma burger	3
 
 
-Query 6: π cid, email (Customer anti join (π cid (DishOrder)))
+Query 6:
+X = Customer join (π cid (Customer) - π cid (DishOrder))
+π cid, email (X)
 
+Results 6:
 Customer.cid	Customer.email
 4	r1d0800121@8w-4lb.com
 5	eu3@4l4ligbm2d4.com
@@ -78,6 +87,7 @@ X = π cid, lid (DishOrder)
 Y = π lid (Lounge)
 (π cid, ssn Customer) join (X ÷ Y)
 
+Results 7:
 Customer.cid	Customer.ssn
 1	988843736
 
@@ -89,13 +99,15 @@ C = π ssn, address_city (OperationStaff)
 D = π ssn, address_city (FlightAttendant)
 σ address_city = 'New Jersey' (A∪B∪C∪D)
 
-No Results
+Results 8:
+None
 
 
 Query 9:
 SELECT DISTINCT cid 
 FROM Customer_Reserves_Flight
 
+Results 9:
 Customer_Reserves_Flight.cid
 1
 13
@@ -107,6 +119,7 @@ SELECT *
 FROM Customer
 WHERE address_street LIKE '%Warner Avenue'
 
+Results 10:
 Customer.cid	Customer.ssn	Customer.gender	Customer.email	Customer.address_street	Customer.address_city	Customer.address_state	Customer.address_zipcode
 7	481161938	F	ijvbv5hx@e0z8o6w.com	9091536 East Warner Avenue	Santa Ana	CA	92705
 8	340130873	M	iz4tvg5j0e.@otiw34ymv68z.com	9091536 West Warner Avenue	Santa Ana	CA	92705
@@ -117,15 +130,18 @@ SELECT C.cid
 FROM Customer as C, Customer_Reserves_Flight as R, DishOrder  as D
 WHERE C.cid = R.cid AND C.cid = D.cid
 
+Results 11:
 C.cid
 1
 14
+
 
 Query 12:
 SELECT L.location
 FROM Lounge as L, Dish as D
 WHERE L.lid = D.lid AND (D.name = 'tacos' OR D.name = 'hummus')
 
+Results 12:
 L.location
 section D32
 section D12
@@ -136,6 +152,7 @@ Query 13:
 EXCEPT (SELECT DISTINCT cid FROM DishOrder))
 EXCEPT (SELECT DISTINCT cid FROM Customer_Reserves_Flight)
 
+Results 13:
 Customer.cid
 4
 5
